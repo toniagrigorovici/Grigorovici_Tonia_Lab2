@@ -40,7 +40,6 @@ namespace Grigorovici_Tonia_Lab2.Pages.Books
 
             _context.Book.Add(Book);
             await _context.SaveChangesAsync();
-
             return RedirectToPage("./Index");
         }
     }

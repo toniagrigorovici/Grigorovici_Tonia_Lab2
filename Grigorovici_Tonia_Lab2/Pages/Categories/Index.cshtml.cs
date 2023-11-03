@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Grigorovici_Tonia_Lab2.Data;
 using Grigorovici_Tonia_Lab2.Models;
+using Grigorovici_Tonia_Lab2.Models.ViewModels;
 
 namespace Grigorovici_Tonia_Lab2.Pages.Categories
 {
-    public class IndexModel : PageModel
+    public class IndexModel : BookCategoriesPageModel
     {
         private readonly Grigorovici_Tonia_Lab2.Data.Grigorovici_Tonia_Lab2Context _context;
 
@@ -21,12 +22,40 @@ namespace Grigorovici_Tonia_Lab2.Pages.Categories
 
         public IList<Category> Category { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public CategoryIndexData CategoryData { get; set; }
+        public int CategoryID { get; set; }
+        public int BookID { get; set; }
+        public async Task OnGetAsync(int? id, int? bookID)
         {
-            if (_context.Category != null)
+            CategoryData = new CategoryIndexData();
+            CategoryData.Categories = await _context.Category
+                .Include(i => i.BookCategories)
+                    .ThenInclude(i => i.Book)
+                          .ThenInclude(b => b.Author)
+                .OrderBy(i => i.CategoryName)
+                .ToListAsync();
+
+            if (id != null)
             {
-                Category = await _context.Category.ToListAsync();
+                CategoryID = id.Value;
+                var category = CategoryData.Categories
+                    .SingleOrDefault(i => i.ID == id.Value);
+
+                if (category != null)
+                {
+                    CategoryData.Books = category.BookCategories.Select(bc => bc.Book).ToList();
+                }
             }
         }
+
+
+
+        /*
+        if (_context.Category != null)
+        {
+            Category = await _context.Category.ToListAsync();
+        }
+        */
     }
 }
+

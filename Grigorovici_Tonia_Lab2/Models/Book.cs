@@ -17,6 +17,9 @@ namespace Grigorovici_Tonia_Lab2.Models
         public DateTime PublishingDate {  get; set; }
         public int? PublisherID { get; set; }
         public Publisher? Publisher { get; set; }
+        public int? BorrowingID { get; set; }
+        public Borrowing? Borrowing { get; set; }
+
         public ICollection<BookCategory>? BookCategories {  get; set; }
     }
 }

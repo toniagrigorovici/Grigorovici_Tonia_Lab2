@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Grigorovici_Tonia_Lab2.Data;
 using Grigorovici_Tonia_Lab2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Grigorovici_Tonia_Lab2.Pages.Books
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : BookCategoriesPageModel
     {
         private readonly Grigorovici_Tonia_Lab2.Data.Grigorovici_Tonia_Lab2Context _context;

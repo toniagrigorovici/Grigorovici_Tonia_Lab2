@@ -9,9 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using Grigorovici_Tonia_Lab2.Data;
 using Grigorovici_Tonia_Lab2.Models;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Grigorovici_Tonia_Lab2.Pages.Books
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : BookCategoriesPageModel 
     {
         private readonly Grigorovici_Tonia_Lab2.Data.Grigorovici_Tonia_Lab2Context _context;
